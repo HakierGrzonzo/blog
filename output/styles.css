@@ -1,0 +1,174 @@
+@import "./colors.css";
+
+html {
+    color: var(--foreground);
+    background-color: var(--background);
+    font-family: 'Karla', sans-serif;
+}
+
+div.container {
+    margin: 1cm;
+    max-width: 20cm;
+    text-align: justify;
+    padding: 5mm;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.codehilite {
+    margin: 5mm;
+}
+
+.codehilite * {
+    background-color: black;
+}
+
+body {
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    width: 100vw;
+    position: sticky;
+    top: 0;
+    right: 0;
+    height: 1cm;
+    font-size: large;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    font-weight: bold;
+    background-color: var(--color13);
+}
+
+
+nav a {
+    text-decoration: none;
+    color: var(--foreground);
+    transition: all 200ms ease-in-out;
+}
+
+nav a:hover {
+    font-size: 110%;
+    color: var(--color3);
+}
+
+h1 {
+    margin-bottom: 1mm;
+}
+
+.cvsection h2 {
+    display: flex;
+    align-items: baseline;
+}
+
+.cvsection h2 span.ruler {
+    flex: 1;
+    border: 1px solid white;
+    margin-left: 1mm;
+}
+
+.cvsection ul {
+    padding: 5mm
+}
+
+.cvsection li {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 5mm;
+}
+
+.cvsection li .category {
+    font-weight: bold;
+    font-size: 130%;
+    margin-right: 1cm;
+    text-align: start;
+}
+
+.cvsection li .category .subtitle {
+    font-weight: 400;
+    font-size: 50%;
+}
+
+.cvsection li .values {
+    text-align: end;
+}
+.cvsection li .values .job-title {
+    margin: 0;
+    font-size: 130%;
+}
+
+.cvsection li .values ul {
+    padding: 0;
+    margin-top: 1cm;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: justify;
+    max-width: 12cm;
+}
+
+.cvsection li .values ul li::before {
+    content: "-";
+    margin-right: 1mm;
+}
+.fancy-fancy {
+    color: var(--color13);
+}
+
+.fancy-normal, .fancy-fancy {
+    transition: color 100ms ease-in-out;
+}
+
+.fancy-fancy:hover, .fancy-normal:hover {
+    color: var(--color3);
+}
+
+.project-card {
+    color: var(--foreground);
+    width: calc(100% - 2cm);
+    min-height: 2cm;
+    border: 1px solid var(--color2);
+    text-decoration: none;
+    padding: 5mm 1cm;
+    margin-top: 1cm;
+    margin-left: auto;
+    margin-right: auto;
+}
+a.block:link {
+    text-decoration: none;
+}
+
+ul.socials {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
+    margin-top: 2cm;
+}
+
+ul.socials li {
+    display: block;
+    font-size: 140%;
+}
+
+ul.socials li a {
+    padding: 3mm;
+    color: var(--foreground);
+    text-decoration: none;
+    background-color: var(--color2);
+    border-radius: 5px;
+    transition: all 200ms ease-in-out;
+}
+
+ul.socials li a:hover {
+    background-color: var(--color3);
+}
+
+h2.header {
+    margin-top: 2cm;
+}
