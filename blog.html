@@ -1,0 +1,11 @@
+<py-main title="HakierGrzonzo's Blog">
+    <pd-for iter="{self.posts}">
+        <py-project
+            link="{'/blog/' + i['name'] + '.html'}"
+            title="{i['name']}"
+            cut_off="{i['name'].find(' ')}"
+            >
+            <py-article article="{i['preview']}"></py-article>
+        </py-project>
+    </pd-for>
+</py-main>

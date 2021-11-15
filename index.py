@@ -6,4 +6,5 @@ class Index(Component):
     tag="py-index"
     template_str=template(__file__)
 
-print(render(Index(parser)))
+with open("./output/index.html", "w+") as f:
+    f.write(render(Index(parser)))

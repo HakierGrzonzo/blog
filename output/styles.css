@@ -4,6 +4,7 @@ html {
     color: var(--foreground);
     background-color: var(--background);
     font-family: 'Karla', sans-serif;
+    overflow-x: hidden;
 }
 
 div.container {
@@ -29,19 +30,25 @@ body {
 
 nav {
     display: flex;
+    justify-content: space-around;
     width: 100vw;
     position: sticky;
     top: 0;
     right: 0;
     height: 1cm;
     font-size: large;
+    background-color: var(--color13);
+}
+
+nav .nav-container {
+    max-width: 20cm;
+    flex: 1;
+    display: flex;
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
     font-weight: bold;
-    background-color: var(--color13);
 }
-
 
 nav a {
     text-decoration: none;
@@ -128,6 +135,7 @@ h1 {
 
 .project-card {
     color: var(--foreground);
+    background-color: var(--background);
     width: calc(100% - 2cm);
     min-height: 2cm;
     border: 1px solid var(--color2);
@@ -136,9 +144,16 @@ h1 {
     margin-top: 1cm;
     margin-left: auto;
     margin-right: auto;
+    transition: all 200ms ease-in-out;
 }
+
 a.block:link {
     text-decoration: none;
+}
+
+a:hover .project-card {
+    border-color: var(--color3);
+    box-shadow: 4px 7px var(--color3);
 }
 
 ul.socials {
