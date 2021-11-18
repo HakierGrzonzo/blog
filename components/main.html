@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
-        <link rel="stylesheet" href="./styles.css"/>
-        <link rel="stylesheet" href="./code.css"/>
+        <link rel="stylesheet" href="/styles.css"/>
+        <link rel="stylesheet" href="/code.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com"/>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
         <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,400;0,700;1,400&display=swap" rel="stylesheet"/> 
@@ -14,11 +14,11 @@
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="article" />
         <meta property="og:title" content="{ title }" />
-        <meta property="og:description" content="HakierGrzonzo's Personal Website" />
-        <meta property="og:url" content="https://www.grzegorzkoperwas.site/" />
-        <meta property="og:site_name" content="Grzegorz Koperwas" />
-        <meta property="og:image" content="https://www.grzegorzkoperwas.site/hakiergrzonzo.png" />
-        <meta property="og:image:secure_url" content="https://www.grzegorzkoperwas.site/hakiergrzonzo.png" />
+        <meta property="og:description" content="HakierGrzonzo's Personal Website" /
+        <meta property="og:url" content="{'https://www.grzegorzkoperwas.site/' if not self.blog_title else 'https://www.grzegorzkoperwas.site/blog/' + self.blog_title}" />
+        <meta property="og:site_name" content="Grzegorz Koperwas Blog" />
+        <meta property="og:image" content="{'https://www.grzegorzkoperwas.site/' + self.image if self.image else 'https://www.grzegorzkoperwas.site/hakiergrzonzo.png'}" />
+        <meta property="og:image:secure_url" content="{'https://www.grzegorzkoperwas.site/' + self.image if self.image else 'https://www.grzegorzkoperwas.site/hakiergrzonzo.png'}" />
     </head>
     <body>
         <nav>

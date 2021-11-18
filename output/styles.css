@@ -19,9 +19,22 @@ div.container {
 .codehilite {
     margin: 5mm;
 }
-
+.section a {
+    color: var(--color1);
+}
 .codehilite * {
     background-color: black;
+}
+
+.codehilite pre {
+    padding: 5mm;
+}
+
+code {
+    background-color: black;
+    padding: .5mm;
+    border-radius: 1mm;
+    color: white;
 }
 
 body {
@@ -31,7 +44,6 @@ body {
 nav {
     display: flex;
     justify-content: space-around;
-    width: 100vw;
     position: sticky;
     top: 0;
     right: 0;
@@ -145,6 +157,9 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     transition: all 200ms ease-in-out;
+    position: relative;
+    top: 0px;
+    left: 0px;
 }
 
 a.block:link {
@@ -153,6 +168,8 @@ a.block:link {
 
 a:hover .project-card {
     border-color: var(--color3);
+    top: -7px;
+    left: -4px;
     box-shadow: 4px 7px var(--color3);
 }
 
@@ -176,14 +193,25 @@ ul.socials li a {
     color: var(--foreground);
     text-decoration: none;
     background-color: var(--color2);
-    border-radius: 5px;
+    border: 1px solid var(--color2);
+    position: relative;
+    top: 0;
+    left: 0;
     transition: all 200ms ease-in-out;
 }
 
 ul.socials li a:hover {
-    background-color: var(--color3);
+    background-color: var(--background);
+    border-color: var(--color3);
+    top: -3px;
+    left: -5px;
+    box-shadow: 5px 3px 0px var(--color3);
 }
 
 h2.header {
     margin-top: 2cm;
+}
+
+em {
+    color: var(--color3);
 }
