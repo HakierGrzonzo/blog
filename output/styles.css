@@ -16,6 +16,15 @@ div.container {
     margin-right: auto;
 }
 
+div.foot {
+    margin-top: 5cm;
+    width: 100%;
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, 8cm);
+    text-align: center;
+}
+
 .codehilite {
     margin: 5mm;
 }
