@@ -1,0 +1,29 @@
+.nav {
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  top: 0;
+  right: 0;
+  height: 1cm;
+  font-size: large;
+  background-color: var(--color13);
+  a {
+    text-decoration: none;
+    color: var(--foreground);
+    transition: all 200ms ease-in-out;
+  }
+  a:hover {
+    font-size: 110%;
+    color: var(--color3);
+  }
+}
+
+.navContainer {
+  max-width: 20cm;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  font-weight: bold;
+}
