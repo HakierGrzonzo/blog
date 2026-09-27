@@ -26,8 +26,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/blog.html">Blog</Link>
           </div>
         </nav>
-        <div className="container">{children}</div>
-        <div className="container foot">
+        <div className={classes.container}>{children}</div>
+        <div className={`${classes.container} ${classes.foot}`}>
           <p>
             Grzegorz <em>HakierGrzonzo</em> Koperwas
           </p>

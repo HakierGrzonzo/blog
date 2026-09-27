@@ -27,3 +27,21 @@
   flex-wrap: wrap;
   font-weight: bold;
 }
+
+.container {
+  margin: 1cm;
+  max-width: 20cm;
+  text-align: justify;
+  padding: 5mm;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.foot {
+  margin-top: 5cm;
+  width: 100%;
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fit, 8cm);
+  text-align: center;
+}

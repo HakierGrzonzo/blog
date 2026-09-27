@@ -1,0 +1,13 @@
+.fancy {
+  color: var(--color13);
+}
+
+.normal,
+.fancy {
+  transition: color 100ms ease-in-out;
+}
+
+.fancy:hover,
+.normal:hover {
+  color: var(--color3);
+}
