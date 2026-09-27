@@ -1,5 +1,5 @@
 from components import main
-from grzemplate import parser, Component, template, render, pp
+from grzemplate import parser, Component, template, render 
 import os
 
 

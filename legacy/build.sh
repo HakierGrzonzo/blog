@@ -1,11 +1,10 @@
 #!/usr/bin/fish
 function build
     for file in (ls *.py)
-        echo "Building $file!"
-        python $file
-            and echo "Success!"
-            or echo "Failure!"
+        echo $file
+        python $file &
     end
+    wait
 end
 
 
@@ -15,7 +14,7 @@ case 'build'
 case 'watch'
     while inotifywait --recursive components/ posts/ *.html *.py > /dev/null 2> /dev/null
         clear
-        time build
+        time build 
     end
 end
 

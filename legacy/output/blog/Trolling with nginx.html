@@ -1,0 +1,135 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8"></meta>
+        <link rel="stylesheet" href="/styles.css"></link>
+        <link rel="stylesheet" href="/code.css"></link>
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""></link>
+        <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,400;0,700;1,400&display=swap" rel="stylesheet"></link> 
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no; target-densityDpi=device-dpi"></meta>
+        <link rel="shortcut icon" href="/favicon.ico" sizes="32x32"></link>
+        <title>Trolling with nginx - HakierGrzonzo</title>
+        <meta name="robots" content="index, follow"></meta>
+        <meta property="og:locale" content="en_US"></meta>
+        <meta property="og:type" content="article"></meta>
+        <meta property="og:title" content="Trolling with nginx - HakierGrzonzo"></meta>
+        <meta property="og:description" content="HakierGrzonzo's Personal Website"></meta>
+        <meta property="og:site_name" content="Grzegorz Koperwas Blog"></meta>
+        <meta property="og:image" content="https://www.grzegorzkoperwas.site/hakiergrzonzo.png"></meta>
+        <meta property="og:image:secure_url" content="https://www.grzegorzkoperwas.site/hakiergrzonzo.png"></meta>
+    </head>
+    <body>
+        <nav>
+            <div class="nav-container">
+                <a href="/">Index</a>
+                <a href="/projects.html">Projects</a>
+                <a href="/about.html">About</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="section">
+    <h1>How to bully script-kiddies with nginx</h1>
+<p>If you have hosted a website on your own, you are probably aware of different 
+scanners looking for popular vulnerabilities. I have noticed many suspicious requests in my logs:</p>
+<div class="codehilite"><pre><span></span><code>-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:01:30:54<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;POST /mifs/.;/services/LogService HTTP/1.1&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">162</span><span class="w"> </span><span class="s2">&quot;https://62.122.233.66:443&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:01:40:33<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /owa/auth/logon.aspx?url=https%3a%2f%2f1%2fecp%2f HTTP/1.1&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">162</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 zgrab/0.x&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:01:40:59<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application HTTP/1.1&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">162</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 zgrab/0.x&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:02:35:47<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /xmlrpc.php HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">162</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:05:15:28<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:06:25:27<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;POST /cgi-bin/.%2e/.%2e/.%2e/.%2e/bin/sh HTTP/1.1&quot;</span><span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /development/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /localhost/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /core/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /staging/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /prod/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:07:52:18<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET /api/.env HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">146</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Python/3.8 aiohttp/3.8.1&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:16:44:28<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;\x04\x01\x00\x19h/F!\x00&quot;</span><span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:16:44:28<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;\x05\x01\x00&quot;</span><span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:16:44:28<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;CONNECT hotmail-com.olc.protection.outlook.com:25 HTTP/1.1&quot;</span><span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:54<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //wp-includes/wlwmanifest.xml HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:54<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //xmlrpc.php?rsd HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">162</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:55<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //blog/wp-includes/wlwmanifest.xml HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:55<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //web/wp-includes/wlwmanifest.xml HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:55<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //wordpress/wp-includes/wlwmanifest.xml HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:30:55<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;GET //website/wp-includes/wlwmanifest.xml HTTP/2.0&quot;</span><span class="w"> </span><span class="m">404</span><span class="w"> </span><span class="m">548</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36&quot;</span>
+-<span class="w"> </span>-<span class="w"> </span><span class="o">[</span><span class="m">27</span>/Feb/2022:21:58:26<span class="w"> </span>+0100<span class="o">]</span><span class="w"> </span><span class="s2">&quot;CONNECT 85.206.160.115:80 HTTP/1.1&quot;</span><span class="w"> </span><span class="m">400</span><span class="w"> </span><span class="m">150</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="w"> </span><span class="s2">&quot;-&quot;</span>
+</code></pre></div>
+
+<p><center><em>IPs redacted</em></center></p>
+<p>We can see that there are multiple different avenues of attack employed by 
+scanners, however, what would happen if we were to reply to them with something
+other then an error?</p>
+<h2>PHP rickrolling</h2>
+<p>I noticed that many scanners look for WordPress and other sites written in php.
+I do not use PHP on my server, so I decided to return a redirect to a
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">specific YouTube video</a> instead.</p>
+<p>You can do this at home if you include following location in your <em>nginx config</em>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">location</span><span class="w"> </span><span class="p">~</span><span class="sr">*</span><span class="w"> </span><span class="s">\.(php|aspx)</span>$<span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1"># add some cache headers, because why not?</span>
+<span class="w">    </span><span class="kn">expires</span><span class="w"> </span><span class="s">10h</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Cache-Control</span><span class="w"> </span><span class="s">&quot;public,</span><span class="w"> </span><span class="s">no-transform&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1"># Say we had a nice night with their mother</span>
+<span class="w">    </span><span class="kn">add_header</span><span class="w"> </span><span class="s">Secret-message</span><span class="w"> </span><span class="s">&quot;Your</span><span class="w"> </span><span class="s">mother</span><span class="w"> </span><span class="s">is</span><span class="w"> </span><span class="s">good</span><span class="w"> </span><span class="s">kisser&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="c1"># and deliver our gift </span>
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">301</span><span class="w"> </span><span class="s">https://www.youtube.com/watch?v=dQw4w9WgXcQ</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This rule will match all incoming requests ending with <code>.php</code> or <code>.aspx</code>. You 
+can put the snippet above in <code>/etc/nginx/rick.conf</code> and add <code>include rick.conf;</code>
+in your main config.</p>
+<p>It also allows you to generate random <em>rickrolling</em> links to annoy your friends with.</p>
+<h2>Lazy user agents</h2>
+<p>Some 1337 h4X0Rs don't bother to change their user agents. They know that they 
+will hack into your mainframe with <code>ping</code> before you notice that they use <code>Python 2.7.5</code>.
+As such we can filter them with two custom rules:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># some clients attempt to use buffer overflow exploits by sending malformed http </span>
+<span class="c1"># requensts, lets serve them with `101 Switching Protocols`.</span>
+<span class="k">error_page</span><span class="w"> </span><span class="mi">400</span><span class="w"> </span><span class="p">=</span><span class="mi">101</span><span class="w"> </span><span class="s">/bait.txt</span><span class="p">;</span>
+<span class="c1"># You can use any other code you want, as =200 means it will be returned as `200 OK`</span>
+<span class="k">error_page</span><span class="w"> </span><span class="mi">403</span><span class="w"> </span><span class="p">=</span><span class="mi">200</span><span class="w"> </span><span class="s">/bait.txt</span><span class="p">;</span>
+<span class="k">location</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">/bait.txt</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1"># in here we have a special message telling them to sudo rm -rf /*</span>
+<span class="w">    </span><span class="c1"># leetspeek required! </span>
+<span class="w">    </span><span class="kn">root</span><span class="w"> </span><span class="s">/script-kiddies/</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The snippet above should be placed in <code>server</code> block, before your <code>location</code> rules.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># if user agent contains (case insensitive) [list] then return 403</span>
+<span class="k">if</span><span class="w"> </span><span class="s">(</span><span class="nv">$http_user_agent</span><span class="w"> </span><span class="p">~</span><span class="sr">*</span><span class="w"> </span><span class="s">(python|curl|zgrab|wget|perl))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kn">return</span><span class="w"> </span><span class="mi">403</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>This snippet should be placed in the <code>location</code> block you wish to protect.</p>
+<p>If you do not have any ideas on how to write a <code>sudo rm -rf /*</code> message, here is 
+my own (more cringe, more better):</p>
+<div class="codehilite"><pre><span></span><code>Remember to change your user agent when you want to b3c0m a tru3
+hax0r!
+
+To change it use this command:
+
+sudo rm -rf /* # user-agent set system chrome
+
+sincerely
+
+xxx_|-|ak13rGrz0|\|zo_xxx
+</code></pre></div>
+
+<h2>Other static files:</h2>
+<p>You can always put some static decoy files in your webserver root, for example,
+hackers seem to like those <code>.env</code> files, they request them all the time. I can
+provide them one:</p>
+<div class="codehilite"><pre><span></span><code>YOUR_FATHER=/dev/null
+</code></pre></div>
+</div>
+
+        </div>
+        <div class="container foot">
+            <p>Grzegorz <em>HakierGrzonzo</em> Koperwas</p>
+        </div>
+    </body>
+    <script src="/main.js" defer="defer" type="module"></script>
+</html>
