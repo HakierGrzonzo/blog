@@ -21,9 +21,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <nav className={classes.nav}>
           <div className={classes.navContainer}>
             <Link href="/">Index</Link>
-            <Link href="/projects.html">Projects</Link>
-            <Link href="/about.html">About</Link>
-            <Link href="/blog.html">Blog</Link>
+            <Link href="/projects">Projects</Link>
+            <Link href="/about">About</Link>
+            <Link href="/blog">Blog</Link>
           </div>
         </nav>
         <div className={classes.container}>{children}</div>
