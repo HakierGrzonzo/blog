@@ -6,7 +6,7 @@ interface Props {
   link: string;
   title: string;
   prefix: number;
-  children: JSX.Element;
+  children?: JSX.Element | string;
 }
 
 export function Project({ link, title, prefix, children }: Props) {
