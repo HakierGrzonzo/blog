@@ -1,71 +1,209 @@
 import type { Metadata } from "next";
 import { CVEntry } from "@/components/CVEntry";
+import { CVRow } from "@/components/CVRow";
 import { CVSection } from "@/components/CVSection";
 import { FancyList } from "@/components/FancyList";
 import { FancyText } from "@/components/fancy-text";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "CV - Grzegorz Koperwas",
 };
 
 const skills: [string, string[]][] = [
-  ["Frontend", ["HTML", "CSS", "Angular", "React", "JavaScript", "TypeScript"]],
   [
-    "Backend",
+    "Front-end",
+    ["React", "Next.js", "MUI", "React-Native", "HTML5", "HLS", "CSS3", "vite"],
+  ],
+  [
+    "Back-end",
     [
-      "Python",
-      "Flask",
       "FastAPI",
+      "pydantic",
       "SQLAlchemy",
-      "nginx",
+      "Nest.js",
+      "poetry",
+      "PostgreSQL",
       "MySQL",
-      "MariaDB",
-      "Postgres",
+      "SurrealDB",
+      "nginx",
     ],
   ],
   [
     "DevOps",
-    ["Git", "Github", "Gitlab CI/CD", "Docker Swarm", "Linux", "bash", "QEMU"],
+    [
+      "Docker",
+      "AWS",
+      "GCP",
+      "Gitlab CI/CD",
+      "Linux",
+      "GitHub Actions",
+      "OpenTelemetry",
+      "Terraform",
+    ],
   ],
-  ["Programming", ["C++", "libav", "openal", "C#", "Java", "Unity", "MOS6502"]],
-  ["Languages", ["Polish (native)", "English (C2)", "German (A1)"]],
+  ["LLM AI", ["ollama selfhosting", "OpenAI API", "Claude Code"]],
+  ["Programming", ["Python", "TypeScript", "JavaScript", "LaTeX"]],
+  ["Languages", ["English (C2)", "Polish (native)", "German (A1)"]],
 ];
 
 export default function About() {
   return (
-    <>
+    <div className={styles.page}>
       <h1>
         <FancyText prefix={"Grzegorz".length}>GrzegorzKoperwas</FancyText>
       </h1>
-      <span className="left">Fullstack Developer</span>
+      <span>Senior Fullstack Developer · Gliwice, Poland</span>
+
+      <p>
+        Fullstack developer not afraid of any challenge. Successful hackathon
+        junkie on a local and international stage.
+      </p>
+      <p>
+        An accomplished individual contributor, and an inspiring leader.
+        Experienced in software consulting and capable of not just implementing
+        the solution, but of solving real problems.
+      </p>
+      <p>
+        Optimizing work processes on a team level, optimizing &amp; diagnosing
+        performance across multiple services. Defining architecture on the
+        application level.
+      </p>
+      <p>
+        <a href="https://github.com/hakiergrzonzo">GitHub</a> ·{" "}
+        <a href="https://www.linkedin.com/in/hakiergrzonzo">LinkedIn</a>
+      </p>
 
       <CVSection title="Skills">
         {skills.map(([category, values]) => (
-          <li key={category}>
-            <span className="category">{category}:</span>
-            <span className="values">
-              <FancyList items={values} />
-            </span>
-          </li>
+          <CVRow key={category} label={`${category}:`}>
+            <FancyList items={values} />
+          </CVRow>
         ))}
       </CVSection>
 
       <CVSection title="Experience">
         <CVEntry
           employer="STX Next"
-          dates="03.2022 - Current"
-          position="Fullstack Developer"
-        />
-        <CVEntry
-          employer="APA Group"
-          dates="09.2020 - 09.2021"
-          position="Junior Fullstack Developer"
+          dates="07.2024 - ongoing"
+          position="Senior Fullstack Developer — AdTech campaign management platform"
+          tech="Python, FastAPI, SQLAlchemy, OpenTelemetry, GCP, GitLab CI/CD, Terraform, Docker, React, NestJS"
         >
-          <li>Developed Angular based frontend for Nazca BMS.</li>
-          <li>Created and maintained Gitlab CI/CD pipelines.</li>
           <li>
-            Aided IOT hardware team in developing embedded Linux images with
-            required kernel modules and software.
+            Enterprise microservice application for managing advertising
+            campaigns for one of the biggest companies in the space.
+          </li>
+          <li>
+            Developed and introduced agentic AI development practices in the
+            team.
+          </li>
+          <li>
+            Leading a team and working with product to design solutions;
+            designing system architecture and presenting ADRs to stakeholders.
+          </li>
+          <li>
+            Designed and implemented an Excel-like domain specific language,
+            with a working compiler and bytecode interpreter.
+          </li>
+          <li>
+            Introduced OpenTelemetry observability and used it to optimize load
+            times 10×.
+          </li>
+          <li>
+            Built the complete CI/CD pipeline to GCP and handed it off to
+            DevOps; leveraged OpenAPI for client generation and custom API
+            review tooling.
+          </li>
+          <li>
+            Owned AuthN/AuthZ: documented processes, identified and resolved
+            security vulnerabilities.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="STX Next"
+          dates="06.2023 - 05.2024"
+          position="Fullstack Developer — Veterinary drug & clinical data platform"
+          tech="Python, FastAPI, Django, Piccolo ORM, PostgreSQL, MySQL, pytest, TypeScript, React Native, AWS, GitHub Actions, Docker"
+        >
+          <li>
+            Up to date drug and treatment information for veterinary
+            professionals (web &amp; mobile app), and a microservice API for
+            corporate customers.
+          </li>
+          <li>
+            Developed a RESTful API in FastAPI following Domain-Driven Design;
+            generated and maintained OpenAPI specifications and clients.
+          </li>
+          <li>
+            Maintained the Django backend and React Native frontend; built PDF
+            generation and implemented the mobile app&apos;s new look.
+          </li>
+          <li>
+            Refactored the API to dramatically speed up development; debugged
+            and fixed issues in open source dependencies.
+          </li>
+          <li>
+            Coordinated integrations with other teams; worked with DevOps on CI
+            and debugged AWS hosted environments.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="STX Next"
+          dates="03.2022 - 06.2023"
+          position="Fullstack Developer — Industrial & sales analytics dashboards"
+          tech="React, TypeScript, Redux, Material-UI, Highcharts.js, Jest, Karma, GitHub Actions, OpenAPI"
+        >
+          <li>
+            React dashboards for monitoring steam cracking of hydrocarbons and
+            for comparing sales forecasts.
+          </li>
+          <li>
+            Co-created a shared React component library/pseudoframework for
+            internal applications, in cooperation with UI/UX, and coordinated
+            its use across teams.
+          </li>
+          <li>
+            Built selective data fetching with caching; reduced date input
+            rendering time 10×; extended Highcharts.js with custom tooltips and
+            graph types.
+          </li>
+          <li>
+            Planned the backend migration from a proprietary monolith to
+            microservices; helped define OpenAPI schemas with the backend team.
+          </li>
+          <li>
+            Worked with the client&apos;s team in Texas; resolved time zone and
+            DST bugs; maintained GitHub Actions CI.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="APA sp. z o.o."
+          dates="06.2020 - 02.2022"
+          position="Systems Analyst, Software Developer, DevOps"
+          tech="Python, Flask, jQuery, libav, Docker, NGINX, Angular, TypeScript, Webpack, Unity, Linux, Bash"
+        >
+          <li>
+            <b>KamCośRTSP:</b> created an in-house ffmpeg (libav) based CCTV
+            video proxy made of several microservices, with a Flask/jQuery web
+            interface. Started as a proof of concept during my internship.
+          </li>
+          <li>
+            Integrated hardware accelerated transcoding with NVIDIA CUDA/NVENC
+            and VAAPI; managed Docker images, a Docker server and CI/CD
+            pipelines for testing and delivery.
+          </li>
+          <li>
+            <b>WebSO:</b> developed the Angular web interface and a component
+            library with fully custom CSS for a user-customizable Nazca BMS
+            dashboard; set up and managed its CI/CD pipelines.
+          </li>
+          <li>
+            Developed Unity based AR mobile prototypes communicating with Nazca
+            BMS.
+          </li>
+          <li>
+            Built an Agile/Scrum time estimation tool using the JIRA REST API;
+            customized embedded Linux images for IoT teams.
           </li>
         </CVEntry>
         <CVEntry
@@ -88,25 +226,67 @@ export default function About() {
           </li>
           <li>
             Created import scripts for &quot;Fiction Alley&quot; archive, that
-            automated the importing process for over 20{" "}000 works
-          </li>
-        </CVEntry>
-        <CVEntry
-          employer="APA Group"
-          dates="07.2020 - 09.2020"
-          position="Intern"
-        >
-          <li>
-            Created a camera management application in Flask using FFmpeg as a
-            proxy and as a transcoder.
-          </li>
-          <li>
-            Created prototype AR application in Unity for use with Nazca BMS.
+            automated the importing process for over 20 000 works
           </li>
         </CVEntry>
       </CVSection>
 
       <CVSection title="Personal Projects">
+        <CVEntry
+          employer="Pebbenote"
+          dates="2025 - ongoing"
+          position="Pebble note-taking app"
+        >
+          <li>
+            Note-taking app for the Pebble smartwatch: dictate on the watch, a
+            local LLM (Ollama) turns the dictation into formatted notes.
+          </li>
+          <li>
+            FastAPI/PostgreSQL backend with Taskiq workers and Keycloak sign-in;
+            watchapp in C and TypeScript with a generated OpenAPI client.
+          </li>
+          <li>
+            Published on the{" "}
+            <a href="https://apps.rebble.io/en_US/search/watchapps/1?query=pebbenote">
+              Rebble app store
+            </a>
+            .
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="MoringMark Archive"
+          dates="2024 - ongoing"
+          position="Comic archive"
+        >
+          <li>
+            Statically generated Next.js comic archive on AWS, with comics
+            gathered via the reddit API, OCR alt-text and CI/CD on GitHub
+            Actions.
+          </li>
+          <li>
+            Hosted at{" "}
+            <a href="https://moringmark.grzegorzkoperwas.site">
+              moringmark.grzegorzkoperwas.site
+            </a>
+            : gigabytes of traffic and 2200+ monthly Google hits for 3$ a month.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="Soundscape of Zabrze"
+          dates="2022"
+          position="Research project"
+        >
+          <li>
+            Took part in the research project &quot;A way to investigate the
+            soundscape of urban spaces: a case study on the example of city of
+            Zabrze&quot;.
+          </li>
+          <li>
+            Designed and implemented a React/FastAPI fullstack application to
+            help with gathering and displaying measurements.
+          </li>
+          <li>Co-authored a research paper for the IBIMA conference.</li>
+        </CVEntry>
         <CVEntry employer="Homelab" position="Managing 3 servers">
           <li>Operates a network of three servers for redundancy.</li>
           <li>Created automated versioned backup system.</li>
@@ -116,20 +296,14 @@ export default function About() {
             and other shenanigans.
           </li>
         </CVEntry>
-        <CVEntry
-          employer="grzemplate"
-          dates="11.2021"
-          position="Static Site Generator"
-        >
+        <CVEntry employer="bfc64" dates="12.2020" position="University project">
           <li>
-            Python based static site generator based on component system
-            providing Angular-like development experience.
+            A simple BrainFuck to Commodore 64 cross compiler written in C++.
           </li>
-          <li>This site was developed and generated with it.</li>
         </CVEntry>
         <CVEntry employer="ClipSelect" dates="05.2020" position="Flask WebApp">
           <li>
-            Currently hosted{" "}
+            Currently hosted{" "}
             <a href="https://clip.grzegorzkoperwas.site/">here</a>.
           </li>
           <li>
@@ -152,6 +326,37 @@ export default function About() {
 
       <CVSection title="Awards & Contests">
         <CVEntry
+          employer="CASSINI Hackathon"
+          dates="2023"
+          position="Second place"
+        >
+          <li>
+            5th CASSINI Hackathon: Space for Defence &amp; Security, organized
+            by Incubator STARTER.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="European Healthcare Hackathon"
+          dates="2022"
+          position="First place"
+        >
+          <li>Organized by InterSystems in Czechia.</li>
+        </CVEntry>
+        <CVEntry employer="GUS Datathon" dates="2022" position="First place">
+          <li>
+            &quot;Wykorzystanie API do bazy Dziedzinowe Bazy Wiedzy Głównego
+            Urzędu Statystycznego&quot;, organized by Kancelaria Prezesa Rady
+            Ministrów.
+          </li>
+        </CVEntry>
+        <CVEntry
+          employer="Silesian University of Technology"
+          dates="2022"
+          position="Best Student"
+        >
+          <li>Awarded by Rada Społeczna Politechniki Śląskiej.</li>
+        </CVEntry>
+        <CVEntry
           employer="HackYeah - Opener.gov"
           dates="12.2021"
           position="Second place"
@@ -167,6 +372,7 @@ export default function About() {
           <li>Created electron based frontend application.</li>
         </CVEntry>
         <CVEntry employer="CryptoBrawl" dates="10.2021" position="First place">
+          <li>Organized by IBM and MIMUW.</li>
           <li>
             Documented API&apos;s for simulated trading platform developed by
             IBM.
@@ -181,20 +387,12 @@ export default function About() {
       <CVSection title="Education">
         <CVEntry
           employer="Silesian University of Technology"
-          dates="10.2020 - now"
-          position="Faculty of Applied Informatics"
-        />
-        <CVEntry
-          employer={"I Liceum Ogólnokształcące w Gliwicach"}
-          dates="09.2017 - 05.2020"
-          position="Physics/Maths"
+          dates="10.2020 - 01.2024"
+          position="Applied Informatics"
         >
-          <li>
-            Managed production of promotional videos in a multi-person team,
-            including consulting the headmaster (client).
-          </li>
+          <li>Computer Networks and Cybersecurity</li>
         </CVEntry>
       </CVSection>
-    </>
+    </div>
   );
 }

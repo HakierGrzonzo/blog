@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import { FancyText } from "./fancy-text";
+import styles from "./Project.module.css";
 
 interface Props {
   link: string;
@@ -13,19 +14,19 @@ interface Props {
 
 export function Project({ link, title, prefix, external, children }: Props) {
   const card = (
-    <div className="project-card">
+    <div className={styles.card}>
       <h2>
         <FancyText prefix={prefix}>{title}</FancyText>
       </h2>
-      <div className="content">{children}</div>
+      <div>{children}</div>
     </div>
   );
   return external ? (
-    <a href={link} className="block">
+    <a href={link} className={styles.link}>
       {card}
     </a>
   ) : (
-    <Link href={link} className="block">
+    <Link href={link} className={styles.link}>
       {card}
     </Link>
   );

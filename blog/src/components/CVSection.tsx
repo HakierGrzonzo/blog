@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { FancyText } from "./fancy-text";
+import styles from "./CVSection.module.css";
 
 export function CVSection({
   title,
@@ -9,14 +10,14 @@ export function CVSection({
   children: ReactNode;
 }) {
   return (
-    <div className="cvsection">
-      <h2>
+    <div>
+      <h2 className={styles.title}>
         <span>
           <FancyText prefix={3}>{title}</FancyText>
         </span>
-        <span className="ruler"></span>
+        <span className={styles.ruler}></span>
       </h2>
-      <ul>{children}</ul>
+      <ul className={styles.list}>{children}</ul>
     </div>
   );
 }

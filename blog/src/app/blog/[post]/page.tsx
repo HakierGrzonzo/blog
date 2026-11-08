@@ -3,6 +3,7 @@ import { readdir } from "fs/promises";
 import path from "path";
 import { JSX } from "react/jsx-runtime";
 import { baseOpenGraph } from "@/site";
+import styles from "./page.module.css";
 
 export async function getPost(post: string) {
   const sanitizedPost = decodeURIComponent(post);
@@ -36,7 +37,7 @@ export default async function Page({ params }: PageProps<"/blog/[post]">) {
   return (
     <>
       <h1>{frontmatter.title}</h1>
-      <div className="section">
+      <div className={styles.post}>
         <Post />
       </div>
     </>

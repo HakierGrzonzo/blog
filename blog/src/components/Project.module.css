@@ -1,0 +1,27 @@
+.link:link {
+  text-decoration: none;
+}
+
+.card {
+  color: var(--foreground);
+  background-color: var(--background);
+  width: calc(100% - 2cm);
+  min-height: 2cm;
+  border: 1px solid var(--color2);
+  text-decoration: none;
+  padding: 5mm 1cm;
+  margin-top: 1cm;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 200ms ease-in-out;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.link:hover .card {
+  border-color: var(--color3);
+  top: -7px;
+  left: -4px;
+  box-shadow: 4px 7px var(--color3);
+}
