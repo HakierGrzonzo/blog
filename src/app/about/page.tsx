@@ -208,7 +208,7 @@ export default function About() {
         </CVEntry>
         <CVEntry
           employer="Organization for Transformative Works"
-          dates="09.2021 - ongoing"
+          dates="08.2021 - 09.2023"
           position="Open Doors Technical Volunteer"
         >
           <li>
