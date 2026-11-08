@@ -7,10 +7,16 @@ import styles from "./page.module.css";
 
 export async function getPost(post: string) {
   const sanitizedPost = decodeURIComponent(post);
-  return (await import(`@/posts/${sanitizedPost}.md`)) as {
+  type Post = {
     default: () => JSX.Element;
     frontmatter: { title: string; description?: string };
   };
+  // Plain posts are .md; posts with interactive components are .mdx.
+  try {
+    return (await import(`@/posts/${sanitizedPost}.md`)) as Post;
+  } catch {
+    return (await import(`@/posts/${sanitizedPost}.mdx`)) as Post;
+  }
 }
 
 export async function generateMetadata({

@@ -4,6 +4,7 @@
   position: sticky;
   top: 0;
   right: 0;
+  z-index: 1;
   height: 1cm;
   font-size: large;
   background-color: var(--color13);

@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 3mm;
+  margin-bottom: 1cm;
+}
+
+.container img,
+.container canvas {
+  flex: 1 1 7cm;
+  min-width: 0;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.container img {
+  filter: grayscale(100%);
+}

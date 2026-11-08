@@ -19,18 +19,6 @@ export default async function BlogIndex() {
       <h1>
         <FancyText prefix={2}>My blog:</FancyText>
       </h1>
-      {/* Standalone HTML page, served from public/blog/dct/ */}
-      <Project
-        external
-        link="/blog/dct/"
-        title="[PL] Dyskretna Transformata Cosinusowa"
-        prefix={"[PL]".length}
-      >
-        <p>
-          Interaktywna wizualizacja dyskretnej transformaty cosinusowej i
-          kodowania JPEG.
-        </p>
-      </Project>
       {posts.map(({ post, frontmatter }) => (
         <Project
           key={post}

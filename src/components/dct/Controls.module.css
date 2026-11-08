@@ -1,0 +1,92 @@
+.sliders {
+  display: flex;
+  flex-direction: column;
+  /* Fixed width so the row doesn't reflow while the formula changes */
+  width: min(100%, 9.5cm);
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 2mm 3mm;
+  border-bottom: 3px double var(--color1);
+  border-left: 1px solid var(--color1);
+}
+
+.sliders label {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.sliders input[type="range"] {
+  flex: 1;
+  margin: 3mm 0;
+  accent-color: var(--color3);
+}
+
+.preset {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+}
+
+.preset label {
+  font-weight: bold;
+}
+
+.preset select {
+  background-color: var(--background);
+  color: var(--color1);
+  font: inherit;
+  font-weight: bold;
+  padding: 4px;
+  border: 1px solid var(--color1);
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.preset select:hover,
+.preset select:focus {
+  color: var(--color3);
+  border-color: var(--color3);
+}
+
+.entropy {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 5mm;
+  margin: 8mm 0;
+}
+
+.entropy > :first-child {
+  width: min(100%, 10cm);
+}
+
+.plain td {
+  min-width: 2em;
+  text-align: center;
+}
+
+.probabilities {
+  max-width: 8cm;
+}
+
+.prob {
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.prob th,
+.prob td {
+  padding: 1mm 4mm;
+  text-align: center;
+}
+
+.prob th {
+  border-bottom: 1px solid var(--color1);
+}
+
+.prob th:first-child,
+.prob td:first-child {
+  border-right: 1px solid var(--color1);
+}

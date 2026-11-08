@@ -1,0 +1,289 @@
+---
+title: "[PL] Dyskretna Transformata Cosinusowa"
+description: Interaktywna wizualizacja dyskretnej transformaty cosinusowej i kodowania JPEG.
+---
+
+import {
+  Panels,
+  TitledEq,
+  Arrow,
+  Brackets,
+  Figure,
+} from "@/components/dct/Layout";
+import { ArrToTable } from "@/components/dct/Matrix";
+import { QUANT_TABLE } from "@/components/dct/dct";
+import {
+  DctIIDemo,
+  FactorSliders,
+  DctIIInput,
+  DctIIOutput,
+} from "@/components/dct/DctII";
+import {
+  JpegDemo,
+  PresetSelect,
+  JpegInput,
+  JpegOutput,
+  EntropyEncoding,
+} from "@/components/dct/Jpeg";
+import { ImageDemo } from "@/components/dct/ImageDemo";
+
+Dyskretna transformata cosinusowa (DCT), transformuje skończony zakres danych
+na sumę funkcji cosinus o rosnących częstotliwościach. Została ona opracowana
+przez _Nasir'a Achmed'a_ w 1972 roku.
+
+Na potrzeby tej prezentacji będziemy używali wyłącznie macierzy _8x1_ oraz _8x8_.
+
+Istnieje kilka rodzajów **DCT**. Pierwszym jaki omówimy będzie _DCT-II_,
+również znany jako _te DCT_.
+
+<DctIIDemo>
+
+<Panels>
+  <FactorSliders />
+  <Arrow />
+  <Brackets>
+    <DctIIInput />
+  </Brackets>
+  <Arrow />
+  <TitledEq title="DCT-II">
+
+$$
+X_k = \sum^{N-1}_{n=0} x_n \cos \left[ \frac{\pi}{N} \left( n + \frac{1}{2} \right) k \right]
+$$
+
+  </TitledEq>
+  <Arrow />
+  <Brackets>
+    <DctIIOutput steps={["dct2"]} />
+  </Brackets>
+</Panels>
+
+## Kwantyzacja
+
+Kwantyzacja jest stratną metodą kompresji, polegającą na przybliżeniu
+oryginalnej wartości do określonej „przedziałki”. Dzięki _DCT_ możemy przypisać
+osobne wspóczynniki dla składowych o różnych częstotliwościach.
+
+Na potrzeby tej prezentacji będziemy wszędzie używać takiej macierzy
+kwantyzacji. Została ona określona w standardzie **JPEG**:
+
+<Figure>
+  <Brackets>
+    <ArrToTable array={QUANT_TABLE} />
+  </Brackets>
+</Figure>
+
+<Panels>
+  <TitledEq title="Kwantyzacja">
+
+$$
+X_k = round \left( \frac{x_k}{w_k} \right)
+$$
+
+  </TitledEq>
+  <Arrow />
+  <Brackets>
+    <DctIIOutput steps={["dct2", "quant"]} />
+  </Brackets>
+  <Arrow />
+  <TitledEq title="Dekwantyzacja">
+
+$$
+X_k = x_k \cdot w_k
+$$
+
+  </TitledEq>
+  <Arrow />
+  <Brackets>
+    <DctIIOutput steps={["dct2", "quant", "unquant"]} />
+  </Brackets>
+</Panels>
+
+## DCT-III
+
+**DCT-III**, znana również jako _IDCT_, jest transformatą odwrotną do DCT-II.
+Dostajemy więc wynik _przypominający_ oryginał. Jednak ewentualne zastosowanie
+_DCT_ do kompresji obrazów wymaga jeszcze paru modyfikacji.
+
+<Panels>
+  <TitledEq title="DCT-III">
+
+$$
+X_k = \frac{x_0}{2} + \sum^{N-1}_{n=0} x_n \cos \left[ \frac{\pi}{N} \left( k + \frac{1}{2} \right) n \right]
+$$
+
+  </TitledEq>
+  <Arrow />
+  <Brackets>
+    <DctIIOutput steps={["dct2", "quant", "unquant", "dct3"]} />
+  </Brackets>
+</Panels>
+
+</DctIIDemo>
+
+## Implementacja DCT w kodowaniu ISO 10918-1 (JPEG)
+
+Kodowanie **JPEG** jest jednym z wielu przykładów wykorzystania _DCT_ do
+kompresji obrazów. Oryginalny standard pochodzi z 1992 roku. Mimo swojej
+prostoty w porównaniu z nowszymi kodami, jest ono nadal bardzo często
+wykorzystywane.
+
+Oryginalny standard zakłada następujący proces kodowania:
+
+- Transformacja z przestrzeni barw **RGB** na **YC<sub>b</sub>C<sub>r</sub>** -
+  jest to krok opcjonalny, można kodować obrazy również w **RGB**, my będziemy
+  kodować tylko **Y**, czyli obrazy czarno-białe.
+- **Podpróbkowanie chrominancji** - Jeżeli obraz został przekształcony do
+  przestrzeni barw **YC<sub>b</sub>C<sub>r</sub>**, to możemy zmniejszyć
+  rozdzielczość sygnałów **C<sub>b</sub>C<sub>r</sub>**, ponieważ ludzkie oko
+  lepiej radzi sobie z rozróżnianiem jasności, niż koloru. Od tego momentu każdy
+  sygnał jest przetwarzany osobno.
+- **Podział na bloki** - _DCT_ operuje na skończonej ilości informacji, więc
+  dzielimy nasz obraz na bloki _8x8_. Jeżeli rozmiar obrazka nie jest podzielny
+  przez osiem, to podczas kodowania to trzeba uzupełnić brakujące dane w jakiś
+  sposób, który zminimalizuje artefakty przy kodowaniu (moja implementacja
+  powtarza piksele z krawędzi).
+- **DCT**
+- **Kwantyzacja**
+- **Kodowanie Huffmana** lub **Kodowanie arytmetyczne**
+
+### DCT w kodowaniu JPEG
+
+Standard **JPEG** zakłada trochę inną formę _DCT-II_, główna różnica w stosunku
+do poprzedniej formy to działanie na macierzach kwadratowych _8x8_:
+
+$$
+X_{u,v} = \frac{1}{4} \alpha(u)\alpha(v) \sum^7_{x=0} \sum^7_{y=0} x_{x,y} \cos \left[\frac{(2x + 1)u\pi}{16}\right] \cos \left[\frac{(2y + 1)v\pi}{16}\right]
+$$
+
+Gdzie:
+
+- $x$ oraz $y$ są współrzędnymi w blokach wejściowych, $u$ oraz $v$ w blokach
+  wyjściowych
+- Funkcja pomocnicza dana jest wzorem:
+
+  $$
+  \alpha(z) = \begin{cases} \frac{\sqrt{2}}{2} & \text{dla} \; z = 0 \\ 1 & \text{dla} \; z \neq 0 \end{cases}
+  $$
+
+  Ma ona na celu sprawienie by macierz zawierająca przekształcone wartości była
+  ortonormalna.
+
+- $x_{x,y}$ to wartość w zakresie _[-127; 128]_, zatem od naszych wejściowych
+  wartości w zakresie _[0; 255]_ odejmujemy 128.
+
+Zobaczmy zatem jak wygląda to dla przykładowych danych:
+
+<JpegDemo>
+
+<Panels>
+  <PresetSelect />
+  <Arrow />
+  <Brackets>
+    <JpegInput />
+  </Brackets>
+  <Arrow />
+  <TitledEq title="DCT-II" />
+  <Arrow />
+  <Brackets>
+    <JpegOutput steps={["dct"]} />
+  </Brackets>
+  <Arrow />
+  <TitledEq title="Kwantyzacja">
+
+$$
+X_{u,v} = round \left( \frac{x_{u,v}}{w_{u,v}} \right)
+$$
+
+  </TitledEq>
+  <Arrow />
+  <Brackets>
+    <JpegOutput steps={["dct", "quant"]} max={64} />
+  </Brackets>
+</Panels>
+
+### Kodowanie Huffmana
+
+Standard **JPEG** przewiduje specyficzny sposób odczytu kolejnych wartości z
+macierzy z kwantyfikowanymi wartościami, zamiast czytać je po kolei, to czytamy
+je _zygzakiem_, od lewego górnego kąta, do prawego dolnego, gdzie będzie
+najwięcej zer. Po angielsku ten sposób zwany jest _entropy coding_.
+
+Możliwe jest również zastosowanie kodu arytmetycznego, jednak nie jest on
+często wspierany przez dekodery.
+
+<Figure>
+  <img
+    src="/dct/entropyZigZag.svg"
+    alt="Obrazek przedstawiający jak zygzakiem są sczytywane kolejne komórki, od (0, 0) -- (1, 0) -- (0, 1) -- (0, 2) -- (1, 1)..."
+  />
+</Figure>
+
+<EntropyEncoding>
+  Większość enkoderów _JPEG_ korzysta z tablic sprecyzowanych przez standard,
+  lecz możliwe jest załączenie własnej.
+</EntropyEncoding>
+
+Znak **EOB** oznacza, że reszta bloku składa się z samych zer. Wiedząc że każdy
+blok składa się z 64 wartości możemy sami dopisać resztę.
+
+## Dekodowanie JPEG
+
+W celu zdekodowania obrazu musimy wykonać operacje przeciwne w stosunku do
+kodowania:
+
+- Dekodowanie Huffmana
+- Dekwantyzacja
+- IDCT
+- Transformacja do przestrzeni barw **RGB** w ramach potrzeby
+
+### Dekwantyzacja i dekodowanie DCT
+
+Po dekwantyzacji danych możemy uzyskać za pomocą _IDCT_ oryginalny obraz (w
+gorszej jakości). Podobnie jak przy kodowaniu, przy dekodowaniu standard zakłada
+inną formę _DCT-III_:
+
+$$
+X_{x,y} = \frac{1}{4} \sum^7_{u=0} \sum^7_{v=0} \alpha(u)\alpha(v) x_{u,v} \cos \left[\frac{(2x + 1)u\pi}{16}\right] \cos \left[\frac{(2y + 1)v\pi}{16}\right]
+$$
+
+<Panels>
+  <Brackets>
+    <JpegOutput steps={["dct", "quant", "unquant"]} max={1024} />
+  </Brackets>
+  <Arrow />
+  <TitledEq title="DCT-III" />
+  <Arrow />
+  <Brackets>
+    <JpegOutput steps={["dct", "quant", "unquant", "idct"]} max={255} />
+  </Brackets>
+  <PresetSelect />
+</Panels>
+
+</JpegDemo>
+
+## Przykłady niesyntetyczne
+
+Po lewej oryginał w odcieniach szarości, po prawej ten sam obraz po kompresji
+opisaną wyżej metodą.
+
+<ImageDemo src="/dct/test.png" alt="Obraz testowy" />
+<ImageDemo src="/dct/dragons.png" alt="Smoki" />
+<ImageDemo src="/dct/sus.png" alt="Sus" />
+<ImageDemo src="/dct/polsl.png" alt="Logo Politechniki Śląskiej" />
+
+## Wnioski
+
+- **DCT** jest podstawą wielu kodów do kompresji obrazów.
+- **DCT** poprzez brak płynnych przejść między blokami nie nadaje się do
+  kompresji audio. Należy jednak zauważyć że wariacja _MDCT_ została do tego
+  celu stworzona.
+
+### Inne
+
+- Ten artykuł powstał jako prezentacja w Angularze, jej kod źródłowy
+  [dostępny jest na moim Githubie](https://github.com/HakierGrzonzo/DCT-angular).
+- Źródła:
+  - [Serpil Tokdemir - DCT Implementation on GPU - Georgia State University](https://scholarworks.gsu.edu/cgi/viewcontent.cgi?article=1032&context=cs_theses)
+  - [Computerphile - Seria materiałów o kodowaniu JPEG](https://youtu.be/n_uNPbdenRs)
+  - [Strona której nie należy wspominać](https://en.wikipedia.org/wiki/JPEG#Encoding)

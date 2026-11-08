@@ -64,3 +64,10 @@ h1 {
 em {
   color: var(--color3);
 }
+
+/* Long KaTeX formulas scroll instead of widening the page */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1mm 0;
+}
