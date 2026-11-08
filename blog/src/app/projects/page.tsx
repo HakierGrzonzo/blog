@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { FancyText } from "@/components/fancy-text";
 import { Project } from "@/components/Project";
+
+export const metadata: Metadata = {
+  title: "HakierGrzonzo's Projects",
+};
 
 export default function Projects() {
   return (
@@ -8,6 +13,7 @@ export default function Projects() {
         <FancyText prefix={2}>My personal projects:</FancyText>
       </h1>
       <Project
+        external
         link="https://moringmark.grzegorzkoperwas.site/"
         title="MoringMark Archive"
         prefix={"Moring".length}
@@ -18,6 +24,7 @@ export default function Projects() {
         </p>
       </Project>
       <Project
+        external
         link="https://reviewshuffle.koperwas.org"
         title="ReviewShuffle"
         prefix={"Review".length}
@@ -28,6 +35,7 @@ export default function Projects() {
         </p>
       </Project>
       <Project
+        external
         link="https://pbl.grzegorzkoperwas.site/map/"
         title="PBL-polsl-2022"
         prefix={"PBL".length}
@@ -38,6 +46,7 @@ export default function Projects() {
         </p>
       </Project>
       <Project
+        external
         link="https://clip.grzegorzkoperwas.site/"
         title="clipselect"
         prefix={"clip".length}

@@ -18,8 +18,10 @@
     "prettier": "^3.9.9",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "rehype-pretty-code": "^0.14.6",
     "remark-frontmatter": "^5.0.0",
-    "remark-mdx-frontmatter": "^6.0.0"
+    "remark-mdx-frontmatter": "^6.0.0",
+    "shiki": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "^20",
