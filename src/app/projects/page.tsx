@@ -14,6 +14,16 @@ export default function Projects() {
       </h1>
       <Project
         external
+        link="https://apps.repebble.com/bc1c0d23d1994611bd94cbdd"
+        title="Pebbenote"
+        prefix={"Pebbe".length}
+      >
+        <p>
+          A simple, local llm powered note taking app for Pebble smartwatches.
+        </p>
+      </Project>
+      <Project
+        external
         link="https://moringmark.grzegorzkoperwas.site/"
         title="MoringMark Archive"
         prefix={"Moring".length}

@@ -247,8 +247,8 @@ export default function About() {
           </li>
           <li>
             Published on the{" "}
-            <a href="https://apps.rebble.io/en_US/search/watchapps/1?query=pebbenote">
-              Rebble app store
+            <a href="https://apps.repebble.com/bc1c0d23d1994611bd94cbdd">
+              Pebble app store
             </a>
             .
           </li>
