@@ -29,6 +29,20 @@ export default async function BlogIndex() {
           <p>{frontmatter.description ?? ""}</p>
         </Project>
       ))}
+      <h1>
+        <FancyText prefix={2}>My talks:</FancyText>
+      </h1>
+      <Project
+        external
+        link="https://www.youtube.com/live/TrXsNiqJdm4?si=FTVCUiO2fhCKvPq-&t=957"
+        title="Streaming responses in FastAPI"
+        prefix={"Streaming".length}
+      >
+        <p>
+          Pykonik Tech Talks #78 (30.10.2025): how to stream LLM responses token
+          by token, like ChatGPT does, with FastAPI and Server-Sent Events.
+        </p>
+      </Project>
     </>
   );
 }
