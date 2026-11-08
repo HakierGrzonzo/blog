@@ -4,7 +4,7 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   output: "export",
-  pageExtensions: ["tsx", "md", "mdx"],
+  pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 
 const withMDX = createMDX({

@@ -7,3 +7,5 @@ export const baseOpenGraph: Metadata["openGraph"] = {
   description: "HakierGrzonzo's Personal Website",
   images: "/hakiergrzonzo.png",
 };
+
+export const SITE_URL = "https://www.grzegorzkoperwas.site";

@@ -3,7 +3,7 @@ import { Karla } from "next/font/google";
 import "./globals.css";
 import classes from "./layout.module.css";
 import Link from "next/link";
-import { baseOpenGraph } from "@/site";
+import { baseOpenGraph, SITE_URL } from "@/site";
 
 const karla = Karla({
   variable: "--font-karla",
@@ -11,7 +11,7 @@ const karla = Karla({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.grzegorzkoperwas.site"),
+  metadataBase: new URL(SITE_URL),
   title: "HakierGrzonzo's Page",
   description: "HakierGrzonzo's Personal Website",
   robots: { index: true, follow: true },
